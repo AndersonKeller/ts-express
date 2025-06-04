@@ -7,7 +7,7 @@ export const createPostController=async(req:Request,res:Response):Promise<Respon
     const postData:CreatePost = req.body
     
     const userId = req.user.id
-    const post: Post = await createPostService(postData)
+    const post: Post = await createPostService(postData,userId)
 
     return res.status(201).json(post)
 
