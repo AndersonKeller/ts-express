@@ -15,3 +15,6 @@ export const getAllUsersController=async(req:Request,res:Response):Promise<any>=
   
     return res.status(200).json(users)
 }
+export const usuarioRetrieveController=async(req:Request,res:Response)=>{
+    return res.status(200).json(req.user)
+}
