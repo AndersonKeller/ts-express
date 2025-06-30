@@ -1,11 +1,11 @@
 import { Repository } from "typeorm";
-import { iCreateLogin, iRetunrLogin } from "../schemas/login.schemas";
+import { iCreateLogin, iRetunrLogin, returnLoginSchema } from "../schemas/login.schemas";
 import { Usuarios } from "../entities/usuarios.entitie";
 import { AppDataSource } from "../data-source";
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken"
 import {compare} from "bcryptjs"
-export const createLoginService=async(loginData:iCreateLogin):Promise<string>=>{
+export const createLoginService=async(loginData:iCreateLogin):Promise<iRetunrLogin>=>{
 
     const userRepository:Repository<Usuarios> = AppDataSource.getRepository(Usuarios)
 
@@ -33,6 +33,10 @@ export const createLoginService=async(loginData:iCreateLogin):Promise<string>=>{
             subject:String(findUser.id)
         }
     )
-        return token
+    const user = returnLoginSchema.parse({
+        token,
+        usuario:findUser
+    })
+        return user
     
 }
